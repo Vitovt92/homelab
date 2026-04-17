@@ -18,7 +18,7 @@ spec:
           ports:
             - containerPort: 9090
       volumes:
-        - name: linkdin-data
+        - name: linkding-data
           persistentVolumeClaim:
-            claimName: linkdin-data-pvc
+            claimName: linkding-data-pvc
 

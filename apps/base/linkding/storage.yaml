@@ -1,8 +1,8 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: linkdin-data-pvc
-  namespace: linkdin
+  name: linkding-data-pvc
+  namespace: linkding
 spec:
   accessModes:
     - ReadWriteOnce

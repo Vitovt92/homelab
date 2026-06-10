@@ -2,7 +2,7 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: monitoring-controllers
-  namespace: monitoring
+  namespace: flux-system
 spec:
   interval: 1m0s
   retryInterval: 1m
@@ -19,7 +19,7 @@ apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
   name: monitoring-configs
-  namespace: monitoring
+  namespace: flux-system
 spec:
   interval: 1m0s
   retryInterval: 1m

@@ -39,4 +39,7 @@ spec:
         hosts:
           - grafana.holovko.org
         path: /
-
+    tls:
+      - secretName: grafana-tls-secret
+        hosts:
+        - grafana.holovko.org

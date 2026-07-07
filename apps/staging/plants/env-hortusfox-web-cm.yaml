@@ -1,0 +1,10 @@
+apiVersion: v1
+data:
+  APP_ADMIN_EMAIL: sergeevvs92@gmail.com
+  APP_TIMEZONE: Europe/Kyiv
+  DB_CHARSET: utf8mb4
+  DB_HOST: mariadb
+  DB_PORT: "3306"
+kind: ConfigMap
+metadata:
+  name: hortusfox-web-cm

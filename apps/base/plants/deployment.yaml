@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: plants-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: plants
+  template:
+    metadata:
+      labels:
+        app: plants
+    spec:
+      containers:
+        - name: hortusfox-web
+          image: ghcr.io/danielbrendel/hortusfox-web:latest
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - mountPath: /var/www/html/public/img
+              name: app_images
+            - mountPath: /var/www/html/app/logs
+              name: app_logs
+            - mountPath: /var/www/html/public/backup
+              name: app_backup
+            - mountPath: /var/www/html/public/themes
+              name: app_themes
+            - mountPath: /var/www/html/app/migrations
+              name: app_migrate
+          envFrom:
+            - configMapRef:
+                name: hortusfox-web-cm
+            - secretRef:
+                name: hortusfox-web-secret
+      volumes:
+        - name: app_images
+          persistentVolumeClaim:
+            claimName: app_images-pvc
+        - name: app_logs
+          persistentVolumeClaim:
+            claimName: app_logs-pvc
+        - name: app_backup
+          persistentVolumeClaim:
+            claimName: app_backup-pvc
+        - name: app_themes
+          persistentVolumeClaim:
+            claimName: app_themes-pvc
+        - name: app_migrate
+          persistentVolumeClaim:
+            claimName: app_migrate-pvc

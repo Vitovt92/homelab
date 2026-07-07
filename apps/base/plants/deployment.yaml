@@ -19,33 +19,33 @@ spec:
             - containerPort: 80
           volumeMounts:
             - mountPath: /var/www/html/public/img
-              name: app_images
+              name: app-images
             - mountPath: /var/www/html/app/logs
-              name: app_logs
+              name: app-logs
             - mountPath: /var/www/html/public/backup
-              name: app_backup
+              name: app-backup
             - mountPath: /var/www/html/public/themes
-              name: app_themes
+              name: app-themes
             - mountPath: /var/www/html/app/migrations
-              name: app_migrate
+              name: app-migrate
           envFrom:
             - configMapRef:
                 name: hortusfox-web-cm
             - secretRef:
                 name: hortusfox-web-secret
       volumes:
-        - name: app_images
+        - name: app-images
           persistentVolumeClaim:
-            claimName: app_images-pvc
-        - name: app_logs
+            claimName: app-images-pvc
+        - name: app-logs
           persistentVolumeClaim:
-            claimName: app_logs-pvc
-        - name: app_backup
+            claimName: app-logs-pvc
+        - name: app-backup
           persistentVolumeClaim:
-            claimName: app_backup-pvc
-        - name: app_themes
+            claimName: app-backup-pvc
+        - name: app-themes
           persistentVolumeClaim:
-            claimName: app_themes-pvc
-        - name: app_migrate
+            claimName: app-themes-pvc
+        - name: app-migrate
           persistentVolumeClaim:
-            claimName: app_migrate-pvc
+            claimName: app-migrate-pvc

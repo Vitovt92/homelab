@@ -38,11 +38,11 @@ spec:
         - containerPort: 3306
           name: mariadb
         volumeMounts:
-        - name: db_data
+        - name: db-data
           mountPath: /var/lib/mysql
   volumeClaimTemplates:
   - metadata:
-      name: db_data
+      name: db-data
     spec:
       accessModes: [ "ReadWriteOnce" ]
       storageClassName: "local-path"

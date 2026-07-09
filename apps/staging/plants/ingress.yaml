@@ -4,6 +4,8 @@ metadata:
   name: plants
 spec:
   ingressClassName: traefik
+  annotations:
+    cert-manager.io/cluster-issuer: cloudflare-letsencrypt-issuer
   rules:
     - host: plants.holovko.org
       http:
@@ -15,4 +17,7 @@ spec:
                   number: 80
             path: /
             pathType: Prefix
-
+  tls:
+  - hosts:
+    - plants.holovko.org
+    secretName: plants-cf-letsencrypt-cert

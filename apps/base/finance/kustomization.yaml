@@ -1,0 +1,6 @@
+resources:
+  - namespace.yaml
+  - firefly-iii-secrets.yaml
+  - mysql.yaml
+  - firefly-iii.yaml
+  - firefly-iii-importer.yaml

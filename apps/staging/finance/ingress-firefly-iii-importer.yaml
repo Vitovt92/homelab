@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/tls-acme: "true"
+    cert-manager.io/cluster-issuer: cloudflare-letsencrypt-issuer
+  labels:
+  name: firefly-iii-importer-ingress
+spec:
+  ingressClassName: traefik
+  rules:
+  - host: importer-finance.holovko.org
+    http:
+      paths:
+      - backend:
+          service:
+            name: firefly-iii-importer
+            port:
+              number: 8080
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - importer-finance.holovko.org
+    secretName: importer-finance.holovko.org-tls
+

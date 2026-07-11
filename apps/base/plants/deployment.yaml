@@ -12,11 +12,17 @@ spec:
       labels:
         app: plants
     spec:
+      securityContext:
+        fsGroup: 33 # www-data group ID
+        runAsUser: 33 # www-data user ID
+        runAsGroup: 33 # www-data group ID
       containers:
         - name: hortusfox-web
           image: ghcr.io/danielbrendel/hortusfox-web:latest
           ports:
             - containerPort: 80
+          securityContext:
+            allowPrivilegeEscalation: false
           volumeMounts:
             - mountPath: /var/www/html/public/img
               name: app-images

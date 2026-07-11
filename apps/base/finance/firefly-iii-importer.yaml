@@ -42,7 +42,6 @@ spec:
         name: firefly-iii-importer
         securityContext:
             allowPrivilegeEscalation: false
-            runAsNonRoot: true 
         env:
         - name: FIREFLY_III_ACCESS_TOKEN
           valueFrom:

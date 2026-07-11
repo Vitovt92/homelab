@@ -60,7 +60,6 @@ spec:
         name: firefly-iii
         securityContext:
           allowPrivilegeEscalation: false
-          runAsNonRoot: true
         env:
         - name: APP_ENV
           value: "local"

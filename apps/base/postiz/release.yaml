@@ -18,3 +18,39 @@ spec:
     crds: Create
   upgrade:
     crds: CreateReplace
+  values:
+    replicaCount: 1
+    ingress:
+      enabled: true  # Disabled by default
+      className: traefik
+      annotations:
+        cert-manager.io/cluster-issuer: cloudflare-letsencrypt-issuer
+      hosts:
+        - host: postiz.holovko.org
+          paths:
+            - path: /
+              pathType: Prefix
+              port: 80
+      tls:
+        - secretName: postiz-tls-secret
+          hosts:
+            - postiz.holovko.org
+      extraRules: []
+    postgresql:
+      enabled: true
+      auth:
+        username: postiz
+        password: postiz-password
+        database: postiz
+      service:
+        ports:
+          postgresql: 5432
+    redis:
+      enabled: true
+      auth:
+        password: postiz-redis-password
+      master:
+        service:
+          ports:
+            redis: 6379
+      

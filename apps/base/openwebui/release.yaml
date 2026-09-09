@@ -19,8 +19,10 @@ spec:
   upgrade:
     crds: CreateReplace
   values:
-    ollama.enabled: false
-    pipelines.enabled: false
+    ollama:
+      enabled: false
+    pipelines:
+      enabled: false
     ingress:
       enabled: true
       class: traefik

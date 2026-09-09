@@ -1,0 +1,61 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: open-webui
+  namespace: openwebui
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: open-webui
+      version: "6.12.0"
+      sourceRef:
+        kind: HelmRepository
+        name: open-webui
+        namespace: openwebui
+      interval: 12h
+  install:
+    crds: Create
+  upgrade:
+    crds: CreateReplace
+  values:
+    ollama.enabled: false
+    pipelines.enabled: false
+    ingress:
+      enabled: true
+      class: traefik
+      host: "openwebui.holovko.org"
+      tls: true
+      existingSecret: "openwebui-tls-secret"
+    persistence:
+      # -- Enable persistence using PVC for Open WebUI data
+      # @section -- Persistence configuration
+      enabled: true
+      # -- Size of the Open WebUI PVC
+      # @section -- Persistence configuration
+      size: 5Gi
+      # -- Use existingClaim if you want to re-use an existing Open WebUI PVC instead of creating a new one
+      # @section -- Persistence configuration
+      existingClaim: ""
+      # -- Subdirectory of Open WebUI PVC to mount. Useful if root directory is not empty.
+      # @section -- Persistence configuration
+      subPath: ""
+      # -- If using multiple replicas, you must update accessModes to ReadWriteMany
+      # @section -- Persistence configuration
+      accessModes:
+        - ReadWriteOnce
+      # -- Storage class of the Open WebUI PVC
+      # @section -- Persistence configuration
+      storageClass: "local-path"
+      # -- Selector to match to get the volume bound to the claim
+      # @section -- Persistence configuration
+      selector: {}
+      # -- Additional annotations to add to the PVC
+      # @section -- Persistence configuration
+      annotations: {}
+      # -- Additional labels to add to the PVC
+      # @section -- Persistence configuration
+      labels: {}
+      # -- Sets the storage provider, availables values are `local`, `s3`, `gcs` or `azure`
+      # @section -- Persistence configuration
+      provider: local

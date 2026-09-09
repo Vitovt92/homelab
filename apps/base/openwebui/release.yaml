@@ -15,8 +15,10 @@ spec:
         namespace: openwebui
       interval: 12h
   install:
+    timeout: 10m
     crds: Create
   upgrade:
+    timeout: 10m
     crds: CreateReplace
   values:
     ollama:

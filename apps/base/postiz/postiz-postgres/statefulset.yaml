@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postiz-postgres
+spec:
+  selector:
+    matchLabels:
+      app: postiz-postgres # has to match .spec.template.metadata.labels
+  serviceName: "postiz-postgres"
+  replicas: 1 # by default is 1
+  minReadySeconds: 10 # by default is 0
+  template:
+    metadata:
+      labels:
+        app: postiz-postgres # has to match .spec.selector.matchLabels
+    spec:
+      containers:
+      - name: postiz-postgres
+        image: postgres:17-alpine
+        envFrom:
+          - secretRef:
+              name: postiz-app-secrets
+        ports:
+        - containerPort: 5432
+          name: postiz-postgres
+        volumeMounts:
+        - name: postgres-volume
+          mountPath: /var/lib/postgresql/data
+        env:
+        - name: PGDATA
+          value: /var/lib/postgresql/data/pgdata
+        livenessProbe:
+          exec:
+            command:
+              - pg_isready
+              - -U
+              - postiz-user
+              - -d
+              - postiz-db-local
+          initialDelaySeconds: 120
+          periodSeconds: 30
+          timeoutSeconds: 10
+          failureThreshold: 5
+        readinessProbe:
+          exec:
+            command:
+              - pg_isready
+              - -U
+              - postiz-user
+              - -d
+              - postiz-db-local
+          initialDelaySeconds: 30
+          periodSeconds: 15
+          timeoutSeconds: 10
+          failureThreshold: 3
+  volumeClaimTemplates:
+  - metadata:
+      name: postgres-volume
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: "local-path"
+      resources:
+        requests:
+          storage: 10Gi
+
+
+
+

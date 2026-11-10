@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postiz-app-cm
+data:
+  # === Required Settings
+  REDIS_URL: 'redis://postiz-redis:6379'
+  BACKEND_INTERNAL_URL: 'http://localhost:3000'
+  TEMPORAL_ADDRESS: "temporal-srv:7233"
+  IS_GENERAL: 'true'
+  DISABLE_REGISTRATION: 'false'
+  RUN_CRON: 'true'
+  # === Storage Settings
+  STORAGE_PROVIDER: 'local'
+  UPLOAD_DIRECTORY: '/uploads'
+  NEXT_PUBLIC_UPLOAD_DIRECTORY: '/uploads'
+

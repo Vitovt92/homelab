@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: temporal-ui-cm
+data:
+  TEMPORAL_ADDRESS: temporal-srv:7233
+  TEMPORAL_CORS_ORIGINS: http://127.0.0.1:3000
+
+

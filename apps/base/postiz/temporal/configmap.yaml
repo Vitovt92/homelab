@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: temporal-cm
+data:
+  # === Required Settings
+  DB: postgres12
+  DB_PORT: "5432"
+  POSTGRES_SEEDS: temporal-postgres-srv
+  DYNAMIC_CONFIG_FILE_PATH: config/dynamicconfig/development-sql.yaml
+  ENABLE_ES: "true"
+  ES_SEEDS: temporal-elasticsearch-srv
+  ES_VERSION: v7
+  TEMPORAL_NAMESPACE: default
+
+

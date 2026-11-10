@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: temporal-admin-tools-cm
+data:
+  # === Required Settings
+  TEMPORAL_ADDRESS: temporal-srv:7233
+  TEMPORAL_CLI_ADDRESS: temporal-srv:7233
+
+

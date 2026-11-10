@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postiz-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postiz-deploy
+  template:
+    metadata:
+      labels:
+        app: postiz-deploy
+    spec:
+      containers:
+        - name: postiz
+          image: ghcr.io/gitroomhq/postiz-app:v2.23.0
+          ports:
+            - containerPort: 5000
+          volumeMounts:
+            - mountPath: /uploads/
+              name: postiz-uploads
+          envFrom:
+            - configMapRef:
+                name: postiz-app-cm
+            - secretRef:
+                name: postiz-app-secrets
+          resources:
+            requests:
+              cpu: 250m
+              memory: 512Mi
+            limits:
+              memory: 1Gi
+          livenessProbe:
+            exec:
+              command:
+                - node
+                - -e
+                - "const r=require('http').get('http://localhost:5000/',res=>process.exit(res.statusCode<500?0:1));r.on('error',()=>process.exit(1));r.setTimeout(4000,()=>{r.destroy();process.exit(1)})"
+            initialDelaySeconds: 120
+            periodSeconds: 30
+            timeoutSeconds: 10
+            failureThreshold: 5
+          readinessProbe:
+            exec:
+              command:
+                - node
+                - -e
+                - "const r=require('http').get('http://localhost:5000/',res=>process.exit(res.statusCode<500?0:1));r.on('error',()=>process.exit(1));r.setTimeout(4000,()=>{r.destroy();process.exit(1)})"
+            initialDelaySeconds: 30
+            periodSeconds: 15
+            timeoutSeconds: 10
+            failureThreshold: 3
+      volumes:
+        - name: postiz-uploads
+          persistentVolumeClaim:
+            claimName: postiz-uploads-pvc

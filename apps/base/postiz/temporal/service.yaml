@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: temporal-srv
+spec:
+  ports:
+    - port: 7233
+  selector:
+    app: temporal-deploy
+  type: ClusterIP

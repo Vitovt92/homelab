@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: temporal-postgres
+spec:
+  selector:
+    matchLabels:
+      app: temporal-postgres-deploy # has to match .spec.template.metadata.labels
+  serviceName: "temporal-postgres-srv"
+  replicas: 1 # by default is 1
+  minReadySeconds: 10 # by default is 0
+  template:
+    metadata:
+      labels:
+        app: temporal-postgres-deploy # has to match .spec.selector.matchLabels
+    spec:
+      containers:
+      - name: temporal-postgres
+        image: postgres:16
+        envFrom:
+          - secretRef:
+              name: temporal-postgres-secrets
+        ports:
+        - containerPort: 5432
+          name: temporal-postgres
+        volumeMounts:
+        - name: temporal-postgres-data
+          mountPath: /var/lib/postgresql/data
+        env:
+        - name: PGDATA
+          value: /var/lib/postgresql/data/pgdata
+        livenessProbe:
+          exec:
+            command:
+              - pg_isready
+              - -U
+              - temporal
+          initialDelaySeconds: 120
+          periodSeconds: 30
+          timeoutSeconds: 10
+          failureThreshold: 5
+        readinessProbe:
+          exec:
+            command:
+              - pg_isready
+              - -U
+              - temporal
+          initialDelaySeconds: 30
+          periodSeconds: 15
+          timeoutSeconds: 10
+          failureThreshold: 3
+  volumeClaimTemplates:
+  - metadata:
+      name: temporal-postgres-data
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: "local-path"
+      resources:
+        requests:
+          storage: 10Gi
+
+
+
+

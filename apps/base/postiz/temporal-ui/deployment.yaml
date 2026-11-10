@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: temporal-ui-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: temporal-ui
+  template:
+    metadata:
+      labels:
+        app: temporal-ui
+    spec:
+      containers:
+        - name: temporal-ui
+          image: temporalio/ui:2.34.0
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: temporal-ui-cm
+          livenessProbe:
+            exec:
+              command: [/bin/sh, -c, "curl -f http://localhost:8080/healthz"]
+            initialDelaySeconds: 120
+            periodSeconds: 30
+            timeoutSeconds: 10
+            failureThreshold: 5
+          readinessProbe:
+            exec:
+              command: [/bin/sh, -c, "curl -f http://localhost:8080/healthz"]
+            initialDelaySeconds: 30
+            periodSeconds: 15
+            timeoutSeconds: 10
+            failureThreshold: 3
+
+

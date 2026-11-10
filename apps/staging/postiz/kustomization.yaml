@@ -3,3 +3,7 @@ kind: Kustomization
 namespace: postiz-ns
 resources:
   - ../../base/postiz
+  - secrets
+  - ingress.yaml
+patches:
+  - path: patches/postiz-app-configmap.yaml

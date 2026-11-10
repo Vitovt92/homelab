@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postiz-redis
+spec:
+  selector:
+    matchLabels:
+      app: postiz-redis # has to match .spec.template.metadata.labels
+  serviceName: "postiz-redis"
+  replicas: 1 # by default is 1
+  minReadySeconds: 10 # by default is 0
+  template:
+    metadata:
+      labels:
+        app: postiz-redis # has to match .spec.selector.matchLabels
+    spec:
+      containers:
+      - name: postiz-redis
+        image: redis:7.2
+        volumeMounts:
+        - name: redis-volume
+          mountPath: /data
+        livenessProbe:
+          exec:
+            command:
+              - redis-cli
+              - ping
+          initialDelaySeconds: 120
+          periodSeconds: 30
+          timeoutSeconds: 10
+          failureThreshold: 5
+        readinessProbe:
+          exec:
+            command:
+              - redis-cli
+              - ping
+          initialDelaySeconds: 30
+          periodSeconds: 15
+          timeoutSeconds: 10
+          failureThreshold: 3
+  volumeClaimTemplates:
+  - metadata:
+      name: redis-volume
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: "local-path"
+      resources:
+        requests:
+          storage: 10Gi
+
+
+
+

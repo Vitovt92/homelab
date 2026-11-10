@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: postiz
+  annotations:
+    cert-manager.io/cluster-issuer: cloudflare-letsencrypt-issuer
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: postiz.holovko.org
+      http:
+        paths:
+          - backend:
+              service:
+                name: postiz
+                port:
+                  number: 80
+            path: /
+            pathType: Prefix
+  tls:
+  - hosts:
+    - postiz.holovko.org
+    secretName: postiz-cf-letsencrypt-cert

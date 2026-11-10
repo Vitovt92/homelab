@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: temporal-postgres-srv
+spec:
+  ports:
+    - port: 5432
+      targetPort: 5432
+      protocol: TCP
+      name: temporal-postgres
+  selector:
+    app: temporal-postgres-deploy
+  clusterIP: None

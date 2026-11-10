@@ -22,7 +22,7 @@ spec:
               name: temporal-postgres-secrets
         ports:
         - containerPort: 5432
-          name: temporal-postgres
+          name: postgres
         volumeMounts:
         - name: temporal-postgres-data
           mountPath: /var/lib/postgresql/data

@@ -26,30 +26,16 @@ spec:
             - mountPath: /etc/temporal/config/dynamicconfig
               name: dynamicconfig
           livenessProbe:
-            exec:
-              command:
-                - temporal
-                - operator
-                - cluster
-                - health
-                - --address
-                - temporal-srv:7233
+            tcpSocket:
+              port: 7233
             initialDelaySeconds: 120
             periodSeconds: 30
-            timeoutSeconds: 10
             failureThreshold: 5
           readinessProbe:
-            exec:
-              command:
-                - temporal
-                - operator
-                - cluster
-                - health
-                - --address
-                - temporal-srv:7233      
+            tcpSocket:
+              port: 7233
             initialDelaySeconds: 30
             periodSeconds: 15
-            timeoutSeconds: 10
             failureThreshold: 3
       volumes:
         - name: dynamicconfig

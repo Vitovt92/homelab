@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: postiz-postgres
-        image: postgres:17-alpine
+        image: postgres:18-alpine
         envFrom:
           - secretRef:
               name: postiz-app-secrets

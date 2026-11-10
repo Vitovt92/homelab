@@ -22,6 +22,9 @@ spec:
                 name: temporal-cm
             - secretRef:
                 name: temporal-secrets
+          volumeMounts:
+            - mountPath: /etc/temporal/config/dynamicconfig
+              name: dynamicconfig
           livenessProbe:
             exec:
               command:
@@ -48,6 +51,10 @@ spec:
             periodSeconds: 15
             timeoutSeconds: 10
             failureThreshold: 3
+      volumes:
+        - name: dynamicconfig
+          configMap:
+            name: temporal-dynamicconfig-cm
 
 
 

@@ -6,3 +6,4 @@ data:
   MAIN_URL: 'https://postiz.holovko.org'
   FRONTEND_URL: 'https://postiz.holovko.org'
   NEXT_PUBLIC_BACKEND_URL: 'https://postiz.holovko.org/api'
+  TZ: 'Europe/Kyiv'

@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: excalidraw-ingress
+  annotations:
+    cert-manager.io/cluster-issuer: cloudflare-letsencrypt-issuer
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: draw.holovko.org
+      http:
+        paths:
+          - backend:
+              service:
+                name: excalidraw
+                port:
+                  number: 80
+            path: /
+            pathType: Prefix
+  tls:
+  - hosts:
+    - draw.holovko.org
+    secretName: draw-cf-letsencrypt-cert

@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: excalidraw-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: excalidraw-deploy
+  template:
+    metadata:
+      labels:
+        app: excalidraw-deploy
+    spec:
+      containers:
+        - name: excalidraw
+          image: excalidraw/excalidraw:latest
+          ports:
+            - containerPort: 80
+          securityContext:
+            allowPrivilegeEscalation: false

@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: postiz
-          image: ghcr.io/gitroomhq/postiz-app:v2.23.0
+          image: ghcr.io/gitroomhq/postiz-app:v2.26.0
           ports:
             - containerPort: 5000
           volumeMounts:

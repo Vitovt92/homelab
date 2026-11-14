@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: temporal
-          image: temporalio/auto-setup:1.28.1
+          image: temporalio/auto-setup:1.29.7
           ports:
             - containerPort: 7233
           envFrom:

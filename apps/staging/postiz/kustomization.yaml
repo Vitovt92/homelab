@@ -5,5 +5,6 @@ resources:
   - ../../base/postiz
   - secrets
   - ingress.yaml
+  - postiz-schema-sync-v226.job.yaml
 patches:
   - path: patches/postiz-app-configmap.yaml

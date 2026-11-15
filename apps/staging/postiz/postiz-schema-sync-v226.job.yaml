@@ -1,0 +1,26 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  namespace: postiz-ns
+  name: postiz-schema-sync-v226
+spec:
+  template:
+    spec:
+      containers:
+      - name: postiz-schema-sync-v226
+        image: ghcr.io/gitroomhq/postiz-app@sha256:875e61ac5d0ac43c3dec78a78a7032dfb03d9a8c6d4936ebb18adb606cc207c5
+        command: ["pnpm"]
+        args:
+          - dlx
+          - prisma@6.5.0
+          - db
+          - push
+          - --accept-data-loss
+          - --schema
+          - /app/libraries/nestjs-libraries/src/database/prisma/schema.prisma
+        envFrom:
+          - secretRef:
+              name: postiz-app-secrets
+        workingDir: /app 
+      restartPolicy: Never
+  backoffLimit: 0

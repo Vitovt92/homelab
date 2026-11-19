@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: audiobooks-cm
+data:
+  TZ: "Europe/Kyiv"
+  PORT: "3005"

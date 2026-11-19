@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: audiobooks
+spec:
+  ports:
+    - port: 3005
+      targetPort: 3005
+      protocol: TCP
+      name: http
+  selector:
+    app: audiobooks-deploy
+  type: ClusterIP

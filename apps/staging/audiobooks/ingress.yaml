@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: audiobooks-ingress
+  annotations:
+    cert-manager.io/cluster-issuer: cloudflare-letsencrypt-issuer
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: audiobooks.holovko.org
+      http:
+        paths:
+          - backend:
+              service:
+                name: audiobooks
+                port:
+                  number: 3005
+            path: /
+            pathType: Prefix
+  tls:
+  - hosts:
+    - audiobooks.holovko.org
+    secretName: audiobooks-cf-letsencrypt-cert

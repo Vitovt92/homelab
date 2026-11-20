@@ -7,3 +7,7 @@ resources:
   - ingress.yaml
 patches:
   - path: patches/postiz-app-configmap.yaml
+  - path: patches/cf-r2-uploads-add-cm.json
+    target:
+      kind: Deployment
+      name: postiz-deploy
